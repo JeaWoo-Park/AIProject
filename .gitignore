@@ -31,3 +31,20 @@
 *.app
 
 .vs
+.vs/
+
+x64/
+
+x86/
+
+Debug/
+
+Release/
+
+v17/
+
+v15/
+
+*.asm
+
+Buckland_Chapter7 to 10_Raven/Debug/
