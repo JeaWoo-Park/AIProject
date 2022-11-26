@@ -47,12 +47,15 @@ public:
   //permitting a shot.
   bool        bShootable;
   
+  //상대체력
+  int iHp;
 
-  MemoryRecord():fTimeLastSensed(-999),
-            fTimeBecameVisible(-999),
-            fTimeLastVisible(0),
-            bWithinFOV(false),
-            bShootable(false)
+  MemoryRecord() :fTimeLastSensed(-999),
+      fTimeBecameVisible(-999),
+      fTimeLastVisible(0),
+      bWithinFOV(false),
+      bShootable(false),
+      iHp(100)
   {}
 };
 
@@ -111,6 +114,13 @@ public:
   std::list<Raven_Bot*> GetListOfRecentlySensedOpponents()const;
 
   void     RenderBoxesAroundRecentlySensed()const;
+
+
+  //Hit 표시 
+  void     UpdateTargetBot(Raven_Bot* pTarget);
+
+  //Helth 넘겨줌
+  int  GetTargetBotHealth(Raven_Bot* pOpponent);
 
 };
 

@@ -279,3 +279,23 @@ void  Raven_SensoryMemory::RenderBoxesAroundRecentlySensed()const
   }
 
 }
+
+void Raven_SensoryMemory::UpdateTargetBot(Raven_Bot* pTarget)
+{
+    if (m_pOwner != pTarget)
+    {
+        MakeNewRecordIfNotAlreadyPresent(pTarget);
+
+        MemoryRecord& info = m_MemoryMap[pTarget];
+        if (pTarget->Health() > 0)
+            info.iHp = pTarget->Health();
+        else
+            info.iHp = 100;
+    }
+}
+
+int Raven_SensoryMemory::GetTargetBotHealth(Raven_Bot* pOpponent)
+{
+    MemoryRecord& info = m_MemoryMap[pOpponent];
+    return info.iHp;
+}

@@ -276,6 +276,16 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
     }
 
 
+  case Msg_HitAnemy:
+  {
+      //맞은 적
+      Raven_Bot* hitAnemy = (Raven_Bot*)msg.ExtraInfo;
+      //발사자 메모리에 맞힌적 맞았다고 표시
+      GetSensoryMem()->UpdateTargetBot(hitAnemy);
+      return true;
+  }
+
+
   default: return false;
   }
 }

@@ -141,6 +141,13 @@ void Rocket::InflictDamageOnBotsWithinBlastRadius()
                               (*curBot)->ID(),
                               Msg_TakeThatMF,
                               (void*)&m_iDamageInflicted);
+
+      Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+          (*curBot)->ID(),
+          m_iShooterID,
+          Msg_HitAnemy,
+          (*curBot));
+
       
     }
   }  
