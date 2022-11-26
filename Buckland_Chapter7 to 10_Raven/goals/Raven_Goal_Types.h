@@ -20,6 +20,7 @@ enum
   goal_wander,
   goal_negotiate_door,
   goal_attack_target,
+  goal_bait,
   goal_hunt_target,
   goal_strafe,
   goal_adjust_range,
