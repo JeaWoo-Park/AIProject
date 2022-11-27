@@ -5,7 +5,7 @@
 //
 //  Name:   GetWeaponGoal_Evaluator.h
 //
-//  Author: Mat Buckland (www.ai-junkie.com)
+//  Author: 2018180020 ¹ÚÀç¿ì
 //
 //  Desc:  class to calculate how desirable the goal of fetching a weapon item
 //         is 

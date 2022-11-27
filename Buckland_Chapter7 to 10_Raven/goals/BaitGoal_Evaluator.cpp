@@ -9,25 +9,22 @@
 
 #include <string>
 
-
+// 2018180020 ¹ÚÀç¿ì
 
 
 //------------------- CalculateDesirability ---------------------------------
 //-----------------------------------------------------------------------------
 double GetBAIT_Evaluator::CalculateDesirability(Raven_Bot* pBot)
 {
-    //grab the distance to the closest instance of the weapon type
     double Railgun = Raven_Feature::IndividualWeaponStrength(pBot, type_rail_gun);
 
-  
-    //value used to tweak the desirability
-    const double Tweaker = 0.15;
+    const double Tweaker = 1.0;
 
     double Health, WeaponStrength;
 
     Health = Raven_Feature::Health(pBot);
 
-    double Desirability = (Tweaker * (1 - Health) * Railgun*10000 ) ;
+    double Desirability = (Tweaker * Health * Railgun*1.2 ) ;
     Desirability *= m_dCharacterBias;
     return Desirability;
 }
@@ -45,5 +42,5 @@ void GetBAIT_Evaluator::SetGoal(Raven_Bot* pBot)
 void GetBAIT_Evaluator::RenderInfo(Vector2D Position, Raven_Bot* pBot)
 {
  
-    gdi->TextAtPos(Position, "Bait : " + ttos(CalculateDesirability(pBot), 2));
+    gdi->TextAtPos(Position, "B:" + ttos(CalculateDesirability(pBot), 2));
 }

@@ -5,7 +5,7 @@
 //
 //  Name:   Goal_Bait.h
 //
-//  Author: Mat Buckland (ai-junkie.com)
+//  Author:  2018180020 ¹ÚÀç¿ì
 //
 //  Desc:   
 //
@@ -19,7 +19,7 @@ class Goal_Bait : public Goal_Composite<Raven_Bot>
 {
 public:
 
-	Goal_Bait(Raven_Bot* pOwner) :Goal_Composite<Raven_Bot>(pOwner, goal_attack_target)
+	Goal_Bait(Raven_Bot* pOwner) :Goal_Composite<Raven_Bot>(pOwner, goal_bait)
 	{}
 
 	void Activate();

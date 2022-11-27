@@ -197,7 +197,7 @@ void Goal_Think::RenderEvaluations(int left, int top)const
   {
     (*curDes)->RenderInfo(Vector2D(left, top), m_pOwner);
 
-    left += 75;
+    left += 65;
   }
 }
 
