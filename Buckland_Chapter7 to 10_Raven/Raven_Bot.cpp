@@ -349,7 +349,7 @@ void Raven_Bot::ReduceHealth(unsigned int val)
   }
 
   m_bHit = true;
-
+  m_bHitCheck = true;
   m_iNumUpdatesHitPersistant = (int)(FrameRate * script->GetDouble("HitFlashTime"));
 }
 

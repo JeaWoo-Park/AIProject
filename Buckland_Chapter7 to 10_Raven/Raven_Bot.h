@@ -145,6 +145,11 @@ public:
   void          ReduceHealth(unsigned int val);
   void          IncreaseHealth(unsigned int val);
   void          RestoreHealthToMaximum();
+  bool			m_bHitCheck = false;
+  int			m_iHitCount=0;
+  int           HitCount()const { return m_iHitCount+1; }
+  bool          HitCheck()const { return m_bHitCheck; }
+
 
   int           Score()const{return m_iScore;}
   void          IncrementScore(){++m_iScore;}

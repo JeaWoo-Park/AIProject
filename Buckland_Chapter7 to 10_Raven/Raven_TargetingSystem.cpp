@@ -20,7 +20,8 @@ void Raven_TargetingSystem::Update()
     double ClosestDistSoFar = MaxDouble;
     m_pCurrentTarget = 0;
 
-    int minHelath = 100;
+    int maxcount = 0;
+
     //grab a list of all the opponents the owner can sense
     std::list<Raven_Bot*> SensedBots;
     SensedBots = m_pOwner->GetSensoryMem()->GetListOfRecentlySensedOpponents();
@@ -31,11 +32,11 @@ void Raven_TargetingSystem::Update()
         //make sure the bot is alive and that it is not the owner
         if ((*curBot)->isAlive() && (*curBot != m_pOwner))
         {
-            //내가(봇이) 타격한 봇들 중에 체력이 가장 적은 봇을 타격한다.
-            int health = m_pOwner->GetSensoryMem()->GetTargetBotHealth(*curBot);
-            if (health < minHelath)
+            //내가(봇이) 타격한 봇들 중에 hitcount가 가장 많은 봇을 타격한다.
+            int hitcnt = m_pOwner->GetSensoryMem()->GetTargetBotHitCount(*curBot);
+            if (hitcnt > maxcount)
             {
-                minHelath = health;
+                maxcount = hitcnt;
                 m_pCurrentTarget = *curBot;
             }
         }

@@ -50,12 +50,15 @@ public:
   //상대체력
   int iHp;
 
+  //hitcheck한 횟수
+  int ihitcheck;
+
   MemoryRecord() :fTimeLastSensed(-999),
       fTimeBecameVisible(-999),
       fTimeLastVisible(0),
       bWithinFOV(false),
       bShootable(false),
-      iHp(100)
+      ihitcheck(0)
   {}
 };
 
@@ -119,8 +122,8 @@ public:
   //Hit 표시 
   void     UpdateTargetBot(Raven_Bot* pTarget);
 
-  //Helth 넘겨줌
-  int  GetTargetBotHealth(Raven_Bot* pOpponent);
+  //tHitCount 넘겨줌
+  int  GetTargetBotHitCount(Raven_Bot* pOpponent);
 
 };
 

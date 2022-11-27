@@ -277,7 +277,7 @@ void  Raven_SensoryMemory::RenderBoxesAroundRecentlySensed()const
     gdi->Line(p.x+b, p.y+b, p.x-b, p.y+b);
     gdi->Line(p.x-b, p.y+b, p.x-b, p.y-b);
   }
-
+  
 }
 
 void Raven_SensoryMemory::UpdateTargetBot(Raven_Bot* pTarget)
@@ -287,15 +287,18 @@ void Raven_SensoryMemory::UpdateTargetBot(Raven_Bot* pTarget)
         MakeNewRecordIfNotAlreadyPresent(pTarget);
 
         MemoryRecord& info = m_MemoryMap[pTarget];
-        if (pTarget->Health() > 0)
-            info.iHp = pTarget->Health();
+        if (pTarget->HitCheck() == true)
+        {
+            info.ihitcheck = pTarget->HitCount();
+            pTarget->m_bHitCheck = false;
+        }
         else
-            info.iHp = 100;
+            info.ihitcheck = 0;
     }
 }
 
-int Raven_SensoryMemory::GetTargetBotHealth(Raven_Bot* pOpponent)
+int Raven_SensoryMemory::GetTargetBotHitCount(Raven_Bot* pOpponent)
 {
     MemoryRecord& info = m_MemoryMap[pOpponent];
-    return info.iHp;
+    return info.ihitcheck;
 }
