@@ -20,7 +20,7 @@ double GetBAIT_Evaluator::CalculateDesirability(Raven_Bot* pBot)
 
     const double Tweaker = 1.0;
 
-    double Health, WeaponStrength;
+    double Health;
 
     Health = Raven_Feature::Health(pBot);
 
