@@ -69,9 +69,11 @@ public:
   //returns a list of node indexes that comprise the shortest path
   //from the source to the target
   virtual std::list<int>                GetPathToTarget()const=0;
+  virtual std::list<int>                GetMiddlePathToTarget()=0;
 
   //returns the path as a list of PathEdges
   virtual std::list<PathEdge>           GetPathAsPathEdges()const=0;
+  virtual std::list<PathEdge>           GetMiddlePathAsPathEdges()const=0;
 
   SearchType                            GetType()const{return m_SearchType;}
 };
@@ -109,6 +111,7 @@ private:
 
   int                            m_iSource;
   int                            m_iTarget;
+  int                            m_middle_nd;
 
   //create an indexed priority queue of nodes. The nodes with the
   //lowest overall F cost (G+H) are positioned at the front.
@@ -150,9 +153,11 @@ public:
   //returns a vector of node indexes that comprise the shortest path
   //from the source to the target
   std::list<int>         GetPathToTarget()const;
+  std::list<int>         GetMiddlePathToTarget();
 
   //returns the path as a list of PathEdges
   std::list<PathEdge>    GetPathAsPathEdges()const;
+  std::list<PathEdge>    GetMiddlePathAsPathEdges()const;
 
   //returns the total cost to the target
   double            GetCostToTarget()const{return m_GCosts[m_iTarget];}
@@ -246,6 +251,28 @@ Graph_SearchAStar_TS<graph_type, heuristic>::GetPathToTarget()const
   return path;
 } 
 
+template <class graph_type, class heuristic>
+std::list<int>
+Graph_SearchAStar_TS<graph_type, heuristic>::GetMiddlePathToTarget()
+{
+    std::list<int> path;
+    if (m_iTarget < 0)  return path;
+
+    int nd = m_pPQ->Pop();
+    m_ShortestPathTree[nd] = m_SearchFrontier[nd];
+    //nd = m_SearchFrontier[nd]->From();
+    m_middle_nd = nd;
+    path.push_back(nd);
+
+    while ((nd != m_iSource) && (m_ShortestPathTree[nd] != 0))
+    {
+        nd = m_ShortestPathTree[nd]->From();
+
+        path.push_front(nd);
+    }
+
+    return path;
+}
 
 //-------------------------- GetPathAsPathEdges -------------------------------
 //
@@ -275,6 +302,29 @@ Graph_SearchAStar_TS<graph_type, heuristic>::GetPathAsPathEdges()const
   return path;
 }
 
+template <class graph_type, class heuristic>
+std::list<PathEdge>
+Graph_SearchAStar_TS<graph_type, heuristic>::GetMiddlePathAsPathEdges()const
+{
+    std::list<PathEdge> path;
+
+    //just return an empty path if no target or no path found
+    if (m_iTarget < 0)  return path;
+
+    int nd = m_middle_nd;
+
+    while ((nd != m_iSource) && (m_ShortestPathTree[nd] != 0))
+    {
+        path.push_front(PathEdge(m_Graph.GetNode(m_ShortestPathTree[nd]->From()).Pos(),
+            m_Graph.GetNode(m_ShortestPathTree[nd]->To()).Pos(),
+            m_ShortestPathTree[nd]->Flags(),
+            m_ShortestPathTree[nd]->IDofIntersectingEntity()));
+
+        nd = m_ShortestPathTree[nd]->From();
+    }
+
+    return path;
+}
 //-------------------------- Graph_SearchDijkstras_TS -------------------------
 //
 //  Dijkstra's algorithm class modified to spread a search over multiple
@@ -347,10 +397,12 @@ public:
 
   //returns a vector of node indexes that comprise the shortest path
   //from the source to the target
-  std::list<int> GetPathToTarget()const;
+  std::list<int>         GetPathToTarget()const;
+  std::list<int>         GetMiddlePathToTarget();
 
   //returns the path as a list of PathEdges
   std::list<PathEdge>    GetPathAsPathEdges()const;
+  std::list<PathEdge>    GetMiddlePathAsPathEdges()const;
 
   //returns the total cost to the target
   double            GetCostToTarget()const{return m_CostToThisNode[m_iTarget];}
@@ -450,7 +502,13 @@ Graph_SearchDijkstras_TS<graph_type, termination_condition>::GetPathToTarget()co
 
   return path;
 } 
-
+template <class graph_type, class termination_condition>
+std::list<int>
+Graph_SearchDijkstras_TS<graph_type, termination_condition>::GetMiddlePathToTarget()
+{
+    std::list<int> path;
+    return path;
+}
 
 //-------------------------- GetPathAsPathEdges -------------------------------
 //
@@ -480,4 +538,11 @@ Graph_SearchDijkstras_TS<graph_type, termination_condition>::GetPathAsPathEdges(
   return path;
 }
 
+template <class graph_type, class termination_condition>
+std::list<PathEdge>
+Graph_SearchDijkstras_TS<graph_type, termination_condition>::GetMiddlePathAsPathEdges()const
+{
+    std::list<PathEdge> path;
+    return path;
+}
 #endif

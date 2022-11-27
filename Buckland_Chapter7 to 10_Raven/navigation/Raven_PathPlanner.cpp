@@ -157,6 +157,42 @@ Raven_PathPlanner::Path Raven_PathPlanner::GetPath()
   return path;
 }
 
+void Raven_PathPlanner::SetMiddlePath()
+{
+    void* pTrigger = m_NavGraph.GetNode(m_pCurrentSearch->GetPathToTarget().back()).ExtraInfo();
+
+    Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+        SENDER_ID_IRRELEVANT,
+        m_pOwner->ID(),
+        Msg_MiddlePathReady,
+        pTrigger);
+}
+
+Raven_PathPlanner::Path Raven_PathPlanner::GetMiddlePath()
+{
+    assert(m_pCurrentSearch && "<Raven_PathPlanner::GetPathAsNodes>: no current search");
+
+    Path path = m_pCurrentSearch->GetMiddlePathAsPathEdges();
+
+    int closest = GetClosestNodeToPosition(m_pOwner->Pos());
+
+    path.push_front(PathEdge(m_pOwner->Pos(),
+        GetNodePosition(closest),
+        NavGraphEdge::normal));
+
+    if (UserOptions->m_bSmoothPathsQuick)
+    {
+        SmoothPathEdgesQuick(path);
+    }
+
+    if (UserOptions->m_bSmoothPathsPrecise)
+    {
+        SmoothPathEdgesPrecise(path);
+    }
+
+    return path;
+}
+
 //--------------------------- SmoothPathEdgesQuick ----------------------------
 //
 //  smooths a path by removing extraneous edges.
@@ -458,5 +494,4 @@ Vector2D Raven_PathPlanner::GetNodePosition(int idx)const
 }
   
  
-
 

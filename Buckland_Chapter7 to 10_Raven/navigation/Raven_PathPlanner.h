@@ -86,6 +86,8 @@ public:
   //additional edges appropriate to the search type and returns it as a list of
   //PathEdges.
   Path       GetPath();
+  void       SetMiddlePath();
+  Path      GetMiddlePath();
 
   //returns the cost to travel from the bot's current position to a specific 
   //graph node. This method makes use of the pre-calculated lookup table

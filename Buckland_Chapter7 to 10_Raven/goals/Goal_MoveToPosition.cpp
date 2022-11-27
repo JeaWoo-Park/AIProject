@@ -28,7 +28,7 @@ void Goal_MoveToPosition::Activate()
   //that the path planning request has succeeded/failed
   if (m_pOwner->GetPathPlanner()->RequestPathToPosition(m_vDestination))
   {
-    AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_vDestination));
+      AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_vDestination));
   }
 }
 
@@ -60,6 +60,17 @@ bool Goal_MoveToPosition::HandleMessage(const Telegram& msg)
   {
     switch(msg.Msg)
     {
+
+    case Msg_MiddlePathReady:
+
+        //clear any existing goals
+        RemoveAllSubgoals();
+
+        AddSubgoal(new Goal_FollowPath(m_pOwner,
+            m_pOwner->GetPathPlanner()->GetMiddlePath()));
+
+        return true; //msg handled
+
     case Msg_PathReady:
 
       //clear any existing goals

@@ -89,8 +89,13 @@ inline void PathManager<path_planner>::UpdateSearches()
     {
       curPath = m_SearchRequests.begin();
     }
-
   }//end while
+
+  while (!m_SearchRequests.empty())
+  {
+      (*curPath)->SetMiddlePath();
+      curPath = m_SearchRequests.erase(curPath);
+  }
 }
 
 //--------------------------- Register ----------------------------------------

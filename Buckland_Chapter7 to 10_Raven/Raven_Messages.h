@@ -14,6 +14,7 @@ enum message_type
 {
   Msg_Blank,
   Msg_PathReady,
+  Msg_MiddlePathReady,
   Msg_NoPathAvailable,
   Msg_TakeThatMF, 
   Msg_YouGotMeYouSOB,
@@ -28,9 +29,14 @@ inline std::string MessageToString(int msg)
 {
   switch(msg)
   {
+
   case Msg_PathReady:
 
     return "Msg_PathReady";
+
+  case Msg_MiddlePathReady:
+
+    return "Msg_MiddlePathReady";
 
   case Msg_NoPathAvailable:
 

@@ -64,6 +64,16 @@ bool Goal_Explore::HandleMessage(const Telegram& msg)
   {
     switch(msg.Msg)
     {
+    case Msg_MiddlePathReady:
+
+        //clear any existing goals
+        RemoveAllSubgoals();
+
+        AddSubgoal(new Goal_FollowPath(m_pOwner,
+            m_pOwner->GetPathPlanner()->GetMiddlePath()));
+
+        return true; //msg handled
+
     case Msg_PathReady:
 
       //clear any existing goals
